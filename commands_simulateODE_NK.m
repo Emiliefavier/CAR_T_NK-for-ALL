@@ -53,7 +53,7 @@ p.DoseChemo=10^(-1);%(10^9 cells/kg)
 p.TotalDose= p.DoseChemo*p.BM; %(10^9 cells)
 
 %Set regimen
-p.Period=16; %time period between the chemos
+p.Period=12; %time period between the chemos
 p.DayAdminChemo=0; %day of chemo administration
 p.DeltaC=1/15; %infusion time
 p.NumAdminsChemo=1; %number of chemo administrations
