@@ -1,6 +1,5 @@
 function sol = simulation_ODE_model_NK(p,tspan)
 
-%options = odeset('RelTol',1e-6,'AbsTol',1e-6,'MaxStep',1e-2,'Events',@events);
 options = odeset('RelTol',1e-6,'AbsTol',1e-6,'MaxStep',1e-2);
 sol = ode15s(@ODEs, tspan, p.IC, options);
 
@@ -49,16 +48,8 @@ dxdt = [Infusion- p.k_b*(I/p.I0)*(T - CARNK_b)*(CARNK_f)^(p.power) + p.k_f*CARNK
          p.r_IFN*CARNK_b*T + p.P_IFN - p.d_IFN*I; %dIFN/dt
          (p.r_IL_Mp*Mp)/(Mp + p.eta)+ p.P_IL - p.d_IL*IL; %dIL/dt
          p.r_G*CARNK_b*T + p.P_G - p.d_G*G; %dG/dt
-         (p.Mc_prod*(p.Mc_max - p.Mc_prod)*((G^(p.h_Mc))/(G^(p.h_Mc) + p.epsilon_Mc^(p.h_Mc))))*p.Mc_I - (p.rho_Mcp*G^(p.h_Mc)*Mc)/(G^(p.h_Mp) + p.epsilon_Mp^(p.h_Mp)) + (0.22*(T/5000)*Mc)/((T/5000) + 0.11) - p.d_Mc*Mc; %dMc/dt
+         (p.Mc_prod*(p.Mc_max - p.Mc_prod)*((G^(p.h_Mc))/(G^(p.h_Mc) + p.epsilon_Mc^(p.h_Mc))))*p.Mc_I - (p.rho_Mcp*G^(p.h_Mc)*Mc)/(G^(p.h_Mp) + p.epsilon_Mp^(p.h_Mp)) + (p.p_M*(T/5000)*Mc)/((T/5000) + p.e_M) - p.d_Mc*Mc; %dMc/dt
          (p.rho_Mcp*G^(p.h_Mc)*Mc)/(G^(p.h_Mp) + p.epsilon_Mp^(p.h_Mp)) - p.d_Mp*Mp];%dMp/dt
 
 end
-%------------------------------------------------------------------------
-% function [value,isterminal,direction] = events(t,x)
-% % Locate the time when tumor passes below a threshold and stop integration to induce tumor eradication.  
-% value = x(3) - 0.25;     % detect tumor = 1
-% isterminal = 1;   % 1= stop the integration, 0 = continue
-% direction = 0;   % negative direction
-% end
-%------------------------------------------------------------------------
 end
