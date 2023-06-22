@@ -60,13 +60,12 @@ p.ka=1/2.5; %absorption constant
 p.Vd=5000; %distribution volume
 p.ivt0=0; %Time IV infusion begins (in days)
 p.tinf=1; %Duration of IV infusion (in days))
-
+%------------------------------------------------------------------------
 %Set parameters for the ODE solver
 tspan = [0 30]; %time span to simulate over
-%------------------------------------------------------------------------
+
 %Call ODE solver function
 sol = simulation_ODE_model_T(p,tspan);
-%sol.xe
 
 time = tspan(1):0.01:tspan(2);
 sol_mesh = deval(sol,time);
@@ -91,18 +90,18 @@ ylabel('Number of cells (x10^9)')
 set(gca,'FontSize',16)
 legend('CAR T Free','CAR T Bound','Tumour cells',Location='best')
 
-%figure(2)
-%hold on
-%plot(time,I,'Color','yellow','LineWidth',2)
-%plot(time,IL,'Color','green','LineWidth',2)
-%xlabel('Time (days)')
-%ylabel('Concentration (pg/mL)')
-%legend('IL-6 concentration',Location='best')
-%legend('IFN-gamma concentration','IL-6 concentration',Location='best')
+figure(2)
+hold on
+plot(time,I,'Color','yellow','LineWidth',2)
+plot(time,IL,'Color','green','LineWidth',2)
+xlabel('Time (days)')
+ylabel('Concentration (pg/mL)')
+legend('IL-6 concentration',Location='best')
+legend('IFN-gamma concentration','IL-6 concentration',Location='best')
 
-% figure(3)
-% hold on
-% plot(time,Mp,'Color','magenta')
-% xlabel('Time (days)')
-% ylabel('Number of cells (10^9 cells)')
-% legend('Macrophages',Location='best')
+figure(3)
+hold on
+plot(time,Mp,'Color','magenta')
+xlabel('Time (days)')
+ylabel('Number of cells (10^9 cells)')
+legend('Macrophages',Location='best')
