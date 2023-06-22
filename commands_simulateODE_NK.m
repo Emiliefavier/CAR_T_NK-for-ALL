@@ -53,7 +53,7 @@ p.DoseChemo=10^(-1);%(10^9 cells/kg)
 p.TotalDose= p.DoseChemo*p.BM; %(10^9 cells)
 
 %Set regimen
-p.Period=8; %time period between the chemos
+p.Period=16; %time period between the chemos
 p.DayAdminChemo=0; %day of chemo administration
 p.DeltaC=1/15; %infusion time
 p.NumAdminsChemo=1; %number of chemo administrations
@@ -77,10 +77,8 @@ tspan = [0 30]; %time span to simulate over
 
 %Call ODE solver function
 sol = simulation_ODE_model_NK(p,tspan);
-%sol.xe
 
 time = tspan(1):0.01:tspan(2);
-%time = tspan(1):0.001:sol.xe;
 sol_mesh = deval(sol,time);
 
 CARNK_f = sol_mesh(1,:);
@@ -103,50 +101,20 @@ ylabel('Number of cells (x10^9)')
 set(gca,'FontSize',16)
 legend('CAR NK free','CAR NK bound','Tumour cells',Location='best')
 
-%tests rho
-% p.rho = 1/60;
-% sol2 = simulation_ODE_model_NK(p,tspan);
-% sol_mesh2 = deval(sol2,time);
-% T2=sol_mesh2(3,:);
-% plot(time,T2,'LineWidth',2)
-% 
-% p.rho = 1/80;
-% sol3 = simulation_ODE_model_NK(p,tspan);
-% sol_mesh3 = deval(sol3,time);
-% T3=sol_mesh3(3,:);
-% plot(time,T3,'LineWidth',2)
+figure(2)
+hold on
+plot(time,I,'Color','yellow','LineWidth',2)
+plot(time,IL,'Color','green','LineWidth',2)
+plot(time,G,'Color','#7E2F8E','lineWidth',2)
+xlabel('Time (days)')
+ylabel('Concentration (pg/mL)')
+legend('IL-6 concentration',Location='best')
+legend('IFN-gamma concentration','IL-6 concentration','GM-CSF concentration',Location='best')
 
-%tests IFN
-% p.r_IFN = 0.0315*10^(-6)*10^(8);
-% sol2 = simulation_ODE_model_NK(p,tspan);
-% sol_mesh2 = deval(sol2,time);
-% T2=sol_mesh2(3,:);
-% plot(time,T2,'LineWidth',2)
-% 
-% p.r_IFN = 0.0315*10^(-6)*10^(9);
-% sol3 = simulation_ODE_model_NK(p,tspan);
-% sol_mesh3 = deval(sol3,time);
-% T3=sol_mesh3(3,:);
-% plot(time,T3,'LineWidth',2)
-%legend ('r_{IFN} = 0.0315','r_{IFN} = 0.0315x10^{2}', 'r_{IFN} = 0.0315x10^{3}',Location='best')
-%legend('\rho=1/45', '\rho=1/60','\rho=1/80')
-
-
-%figure(2)
-%hold on
-%plot(time,I,'Color','yellow','LineWidth',2)
-%plot(time,IL,'Color','green','LineWidth',2)
-%plot(time,G,'Color','#7E2F8E','lineWidth',2)
-%xlabel('Time (days)')
-%ylabel('Concentration (pg/mL)')
-%legend('IL-6 concentration',Location='best')
-%legend('IFN-gamma concentration','IL-6 concentration','GM-CSF concentration',Location='best')
-
-
-% figure(3)
-% hold on
-% plot(time,Mp,'Color','magenta')
-% %plot(time,Mc,'Color','#A2142F','LineWidth',2)
-% xlabel('Time (days)')
-% ylabel('Number of cells (x10^9 cells)')
-% legend('Macrophages',Location='best')
+figure(3)
+hold on
+plot(time,Mp,'Color','magenta')
+plot(time,Mc,'Color','#A2142F','LineWidth',2)
+xlabel('Time (days)')
+ylabel('Number of cells (x10^9 cells)')
+legend('Macrophages',Location='best')
