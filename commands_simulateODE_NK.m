@@ -38,6 +38,8 @@ p.d_Mp = 0.3;
 p.d_Mc = 0.76;
 p.Mc_prod= 0.5;
 p.d_Mp =0.3;
+p.p_M = 0.22;
+p.e_M = 0.11;
 %------------------------------------------------------------------------
 %The next two if statements administer the doses of chemotherapy and cytokine over a given infusion time
 
