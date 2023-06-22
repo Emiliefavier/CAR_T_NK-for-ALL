@@ -1,7 +1,6 @@
 function sol = simulation_ODE_model_T(p,tspan)
 
-%options = odeset('RelTol',1e-6,'AbsTol',1e-6,'MaxStep',1e-2,'Events',@events);
-options = odeset('RelTol',1e-6,'AbsTol',1e-6,'MaxStep',1e-2); %odeset('NonNegative',1);
+options = odeset('RelTol',1e-6,'AbsTol',1e-6,'MaxStep',1e-2); 
 sol = ode15s(@ODEs, tspan, p.IC, options);
 
 time = linspace(tspan(1),tspan(end),1000);
@@ -45,16 +44,9 @@ dxdt = [Infusion - p.k_b*(I/p.I0)*(T - CART_b)*(CART_f)^(p.power) + p.k_f*CART_b
         p.k_b*(I/p.I0)*(T - CART_b)*(CART_f)^(p.power) - p.k_f*CART_b - p.alpha_T*(I/p.I0)*(CART_b)^2 - (CART_b)/(p.tau_T); %dCART_b/dt
         T*p.rho*log((p.T_max)/T) - p.alpha_T*(I/p.I0)*(CART_b)*T;% - p.beta*Mp*T; %dT/dt
         p.r_IFN*CART_b*T + p.P_IFN - p.d_IFN*I; %dIFN/dt
-        p.r_IL*(CART_b)*T + (p.r_IL_Mp*Mp)/(Mp/p.Mp0 + p.eta) + p.P_IL - p.d_IL*IL;
+        p.r_IL*(CART_b)*T + (p.r_IL_Mp*Mp)/(Mp/p.Mp0 + p.eta) + p.P_IL - p.d_IL*IL; %dIL/dt
         Mp*(p.rho_IL*IL)/(IL + p.epsilon_IL) - p.d_Mp*Mp]; %dMp/dt        
         
 end
-%------------------------------------------------------------------------
-% function [value,isterminal,direction] = events(t,x)
-% % Locate the time when tumor passes below a threshold and stop integration to induce tumor eradication.  
-% value = x(3) - 0.25;     % detect tumor = 1
-% isterminal = 1;   % 1= stop the integration, 0 = continue
-% direction = -1;   % negative direction
-% end
-%------------------------------------------------------------------------
+
 end
